@@ -1,0 +1,19 @@
+---------------
+Luotu osoitteessa: https://www.websequencediagrams.com/
+---------------
+
+note over selain:
+Käyttäjä kirjoittaa uuden muistiinpanon
+ja painaa Save-nappia
+end note
+
+note over selain:
+Lomakkeen tapahtumankäsittelijä:
+- lisää uuden muistiinpanon listaan
+- piirtää muistiinpanot uudelleen
+- lähettää uuden muistiinpanon
+palvelimelle POST-metodilla
+end note
+
+selain->palvelin: HTTP POST /new_note_spa
+palvelin-->selain: HTTP CREATED

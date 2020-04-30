@@ -1,0 +1,30 @@
+---------------
+Luotu osoitteessa: https://www.websequencediagrams.com/
+---------------
+
+note over selain:
+käyttäjä kirjoittaa muistiinpanon
+ja painaa Save-painiketta
+end note
+
+selain->palvelin: HTTP POST /new_note
+palvelin-->selain: HTTP FOUND location: /notes
+selain->palvelin: HTTP GET /notes
+palvelin-->selain: HTML-koodi
+selain->palvelin: HTTP GET /main.css
+palvelin-->selain: main.css
+selain->palvelin: HTTP GET /main.js
+palvelin-->selain: main.js
+
+note over selain:
+Javascript-koodi pyytää
+JSON-datan palvelimelta
+end note
+
+selain->palvelin: HTTP GET /data.json
+palvelin-->selain: data.json
+
+note over selain:
+Tapahtumankäsittelijä suoritetaan
+Muistiinpanot lisätään ul-elementtiin
+end note
