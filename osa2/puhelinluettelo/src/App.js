@@ -7,14 +7,13 @@ const Headline = ({ headline }) => {
 }
 
 const Error = ({ error = null }) => {
-	const style = {
-		backgroundColor: 'green'
-	}
-
 	if (error === null) {
 		return null
 	} else {
-		return <div style={style}>{error}</div>
+		let style
+		if (error.type === 'fail') style = {backgroundColor: 'red'}
+		else style = {backgroundColor: 'green'}
+		return <div style={style}>{error.message}</div>
 	}
 }
 
@@ -35,11 +34,11 @@ const AddPerson = ({ persons, setPersons, setError, newName, setNewName, newNumb
 			personsService.create({ name: newName, number: newNumber })
 				.then(response => {
 					setPersons(persons.concat(response.data))
-					setError(`${newName} added to phonebook.`)
+					setError({message: `${newName} added to phonebook.`, type: 'success'})
 					setTimeout(() => setError(null), 2000)
 				})
 				.catch(error => {
-					setError(`Unable to add ${newName} to phonebook.`)
+					setError({message: `Unable to add ${newName} to phonebook.`, type: 'fail'})
 					setTimeout(() => setError(null), 2000)
 				})
 		} else {
@@ -48,12 +47,12 @@ const AddPerson = ({ persons, setPersons, setError, newName, setNewName, newNumb
 					.update({ ...persons.find(person => person.name === newName), number: newNumber })
 					.then(response => {
 						setPersons(persons.map(person => person.name !== newName ? person : response.data))
-						setError(`${newName}'s number updated.`)
+						setError({message: `${newName}'s number updated.`, type: 'success'})
 						setTimeout(() => setError(null), 2000)
 					})
 					.catch(error => {
 						setPersons(persons.filter(person => person.name !== newName))
-						setError(`Unable to update ${newName}'s number.`)
+						setError({message: `Unable to update ${newName}'s number.`, type: 'fail'})
 						setTimeout(() => setError(null), 2000)
 					})
 			}
@@ -85,12 +84,12 @@ const DisplayNumbers = ({ persons, setPersons, setError, filter }) => {
 				.remove(id)
 				.then(() => {
 					setPersons(persons.filter(person => person.id !== id))
-					setError(`${name} removed from phonebook.`)
+					setError({message: `${name} removed from phonebook.`, type: 'success'})
 					setTimeout(() => setError(null), 2000)
 				})
 				.catch(error => {
 					setPersons(persons.filter(person => person.id !== id))
-					setError(`Unable to remove ${name} from phonebook.`)
+					setError({message: `Unable to remove ${name} from phonebook.`, type: 'fail'})
 					setTimeout(() => setError(null), 2000)
 				})
 		}
